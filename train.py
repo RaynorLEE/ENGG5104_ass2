@@ -72,7 +72,7 @@ def Train():
                 normalize,
             ])
 
-    data=getattr(dataset,args.dataset)(batch_size=args.batch_size, transform_train=transform_train, transform_test=transform_test)
+    data = getattr(dataset, args.dataset)(batch_size=args.batch_size, transform_train=transform_train, transform_test=transform_test)
   
     #####
     model=alexnet(num_classes=args.num_classes)
@@ -125,12 +125,12 @@ def Train():
         model.train()
         total=0.0
         correct=0.0
-
+        total_loss = 0.0
         for i,(inputs,target) in enumerate(data.train):
             input, target = inputs.cuda(),target.cuda()
             logit = model(input)
             loss = ce_train(logit,target)
-
+            total_loss += loss
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -139,17 +139,17 @@ def Train():
             correct += predicted.eq(target).sum().item()
         acc_n=logit.max(dim=1)[1].eq(target).sum().item()
         log(args, 'Train acc_n %.5f lr %.5f'%(acc_n/input.size(0), lr))
-
+        log(args, 'loss = %.5f'%(total_loss / total))
         model.eval()
         total=0.0
         class_num=torch.zeros(args.num_classes).cuda()
         correct=torch.zeros(args.num_classes).cuda()
         for i,(inputs,target) in enumerate(data.test):
-            input, target = inputs.cuda(),target.cuda()
+            input, target = inputs.cuda(), target.cuda()
             logit = model(input)
             loss=ce(logit, target)
 
-            _,predicted = logit.max(1)
+            _, predicted = logit.max(1)
             total += target.size(0)
             target_one_hot = F.one_hot(target,args.num_classes)
             predict_one_hot = F.one_hot(predicted,args.num_classes)
@@ -168,7 +168,7 @@ def Train():
 
         log(args, "Test epoch=%d  acc=%.5f best_acc=%.5f"%(epoch, correct.sum()/total, best_acc))
         log(args, "Test "+str(correct/class_num)) 
-        log(args, "Test head acc:"+str(head_acc)+" medium acc "+str(medium_acc)+" tail acc "+str(tail_acc))
+        log(args, "Test head acc:"+str(head_acc)+" medium acc "+str(medium_acc)+" tail acc "+str(tail_acc)+'\n')
 
 if __name__=='__main__':
    args = parser.parse_args()

@@ -85,7 +85,7 @@ class IMBALANCECIFAR100(IMBALANCECIFAR10):
 
 
 class CIFAR10LT(object):
-    def __init__(self, batch_size=128, transform_train, transform_test):
+    def __init__(self, batch_size, transform_train, transform_test):
         mean = [0.4914, 0.4822, 0.4465]
         std = [0.2023, 0.1994, 0.2010]
         normalize = transforms.Normalize(mean, std)
