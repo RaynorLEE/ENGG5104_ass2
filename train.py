@@ -129,8 +129,7 @@ def Train():
         for i,(inputs,target) in enumerate(data.train):
             input, target = inputs.cuda(),target.cuda()
             logit = model(input)
-            #   loss = ce_train(logit,target)
-            loss = nn.CrossEntropyLoss(logit, target)
+            loss = ce_train(logit, target)
             total_loss += loss
             optimizer.zero_grad()
             loss.backward()
