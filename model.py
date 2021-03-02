@@ -69,9 +69,9 @@ class AlexNet(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(2, stride=2)
         )
-        self.avg_pool = nn.AdaptiveAvgPool2d((1, 1))
+        self.avg_pool = nn.AdaptiveAvgPool2d((2, 2))
         self.fc1 = nn.Sequential(
-            nn.Linear(4096, 4096),
+            nn.Linear(1024, 4096),
             nn.ReLU()
         )
         self.fc2 = nn.Sequential(
@@ -88,7 +88,7 @@ class AlexNet(nn.Module):
         x = self.conv5(x)
         x = self.avg_pool(x)
         # x = x.view(-1, 128 * 1 * 1)
-        x = x.view(-1, 4096)
+        x = x.view(-1, 1024)
         x = self.fc1(x)
         x = self.fc2(x)
         x = self.fc3(x)
