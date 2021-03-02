@@ -36,7 +36,7 @@ class AlexNet(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(2, stride=2)
         )
-        self.avg_pool = nn.AdaptiveAvgPool2d(4, stride=4)
+        self.avg_pool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc1 = nn.Sequential(
             nn.Linear(128, 128),
             nn.ReLU()
