@@ -27,7 +27,7 @@ class CrossEntropyLoss(nn.Module):
         log_sum_exp = torch.logsumexp(x, dim=-1)
         for i, cls in enumerate(y):
             x_class = -x[i][cls]
-            log_x_j = torch.log(torch.sum(torch.exp(x[i])))
-            loss[i] = x_class + log_x_j
+            #   log_x_j = torch.log(torch.sum(torch.exp(x[i])))
+            loss[i] = x_class + log_sum_exp[i]
         return loss.mean()
         #   return self.loss_func(x, y)
