@@ -24,10 +24,12 @@ class CrossEntropyLoss(nn.Module):
         # loss = -x + log_sum_exp
         # return loss.mean()
         loss = torch.zeros(y.shape, dtype=x.dtype, device=x.device)
-        log_sum_exp = torch.logsumexp(x, dim=-1)
-        for i, cls in enumerate(y):
-            x_class = -x[i][cls]
+        #   log_sum_exp = torch.logsumexp(x, dim=-1)
+        log_softmax = torch.log_softmax(x, dim=1)
+        for i, gt in enumerate(y):
+            #   x_class = -x[i][gt]
             #   log_x_j = torch.log(torch.sum(torch.exp(x[i])))
-            loss[i] = x_class + log_sum_exp[i]
+            #   loss[i] = x_class + log_sum_exp[i]
+            loss[i] = log_softmax[i][gt]
         return loss.mean()
         #   return self.loss_func(x, y)
