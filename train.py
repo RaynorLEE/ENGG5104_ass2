@@ -127,7 +127,7 @@ def Train():
         correct=0.0
         total_loss = 0.0
         for i,(inputs,target) in enumerate(data.train):
-            input, target = inputs.cuda(),target.cuda()
+            input, target = inputs.cuda(), target.cuda()
             logit = model(input)
             loss = ce_train(logit, target)
             total_loss += loss
@@ -137,7 +137,7 @@ def Train():
             _,predicted = logit.max(1)
             total += target.size(0)
             correct += predicted.eq(target).sum().item()
-        acc_n=logit.max(dim=1)[1].eq(target).sum().item()
+        acc_n = logit.max(dim=1)[1].eq(target).sum().item()
         log(args, 'Train acc_n %.5f lr %.5f'%(acc_n/input.size(0), lr))
         log(args, 'loss = %.5f'%(total_loss / total))
         model.eval()
