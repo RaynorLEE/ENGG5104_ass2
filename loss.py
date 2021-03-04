@@ -11,7 +11,7 @@ class CrossEntropyLoss(nn.Module):
         #   self.loss_func = nn.CrossEntropyLoss()
 
     def forward(self, x, y, epsilon=1e-12, **kwargs):
-        # x = torch.clamp(x, 0, 1.0-epsilon)
+        x = torch.clamp(x, 0, 1.0-epsilon)
         # exp_x = torch.exp(x)
         # mat = torch.zeros(exp_x.size(), device=exp_x.device)
         # for i in range(y.size()[0]):
