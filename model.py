@@ -18,16 +18,16 @@ class AlexNet(nn.Module):
             nn.MaxPool2d(2, stride=2)
         )
         self.conv2 = nn.Sequential(
-            nn.Conv2d(in_channels=96, out_channels=256, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=96, out_channels=128, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, stride=2)
         )
         self.conv3 = nn.Sequential(
-            nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=128, out_channels=192, kernel_size=3, padding=1),
             nn.ReLU()
         )
         self.conv4 = nn.Sequential(
-            nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=192, out_channels=256, kernel_size=3, padding=1),
             nn.ReLU()
         )
         self.conv5 = nn.Sequential(
