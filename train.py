@@ -13,11 +13,11 @@ import torch.nn.functional as F
 import torch.backends.cudnn as cudnn
 import torchvision.transforms as transforms
 
-
 from datasets import dataset
 from model import alexnet
 from loss import CrossEntropyLoss
 from flops import print_model_parm_flops
+from transfroms import *
 
 
 parser = argparse.ArgumentParser(description='PyTorch CIFAR10 Training')
@@ -61,9 +61,9 @@ def Train():
 
     transform_train = transforms.Compose([
                 # TODO: uncomment these lines for task 3
-                # Padding(padding=4),
-                # RandomCrop(size=32),
-                # RandomFlip(),
+                Padding(padding=4),
+                RandomCrop(size=32),
+                RandomFlip(),
                 transforms.ToTensor(),
                 normalize,
             ])
