@@ -18,12 +18,12 @@ class AlexNet(nn.Module):
             nn.MaxPool2d(2, stride=2)
         )
         self.conv2 = nn.Sequential(
-            nn.Conv2d(in_channels=96, out_channels=192, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=96, out_channels=256, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, stride=2)
         )
         self.conv3 = nn.Sequential(
-            nn.Conv2d(in_channels=192, out_channels=256, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, padding=1),
             nn.ReLU()
         )
         self.conv4 = nn.Sequential(
@@ -31,20 +31,20 @@ class AlexNet(nn.Module):
             nn.ReLU()
         )
         self.conv5 = nn.Sequential(
-            nn.Conv2d(in_channels=256, out_channels=192, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, stride=2)
         )
         self.avg_pool = nn.AdaptiveAvgPool2d((2, 2))
         self.fc1 = nn.Sequential(
-            nn.Linear(768, 768),
+            nn.Linear(1024, 1024),
             nn.ReLU()
         )
         self.fc2 = nn.Sequential(
-            nn.Linear(768, 384),
+            nn.Linear(1024, 512),
             nn.ReLU()
         )
-        self.fc3 = nn.Linear(384, 10)
+        self.fc3 = nn.Linear(512, 10)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.conv1(x)
@@ -53,7 +53,7 @@ class AlexNet(nn.Module):
         x = self.conv4(x)
         x = self.conv5(x)
         x = self.avg_pool(x)
-        x = x.view(-1, 768)
+        x = x.view(-1, 1024)
         x = self.fc1(x)
         x = self.fc2(x)
         x = self.fc3(x)
