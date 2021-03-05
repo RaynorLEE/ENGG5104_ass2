@@ -53,7 +53,7 @@ class AlexNet(nn.Module):
         x = self.conv4(x)
         x = self.conv5(x)
         x = self.avg_pool(x)
-        x = x.view(-1, 1024)
+        x = x.view(-1, 768)
         x = self.fc1(x)
         x = self.fc2(x)
         x = self.fc3(x)
