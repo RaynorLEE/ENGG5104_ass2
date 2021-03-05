@@ -13,12 +13,12 @@ class AlexNet(nn.Module):
         # TODO: implement alex net for task 1; 
         # You are free to change channels, kernel sizes, strides, etc. But the model's flops must be smaller than 200M.
         self.conv1 = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=96, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=3, out_channels=128, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, stride=2)
         )
         self.conv2 = nn.Sequential(
-            nn.Conv2d(in_channels=96, out_channels=256, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, stride=2)
         )
