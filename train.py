@@ -84,10 +84,16 @@ def Train():
        print_model_parm_flops(model)
        return
 
+    class_count = [0 for i in range(10)]
+    for i, (inputs, target) in enumerate(data.train):
+        for t in target:
+            class_count[t] += 1
+    dataset_size = sum(class_count)
+    # loss_kwargs = {'cls_count': class_count, 'dataset_size': dataset_size}
 
-    optimizer=torch.optim.SGD(model.parameters(), lr = args.lr, momentum=args.momentum, weight_decay=args.weight_decay, nesterov=True)
-    ce=CrossEntropyLoss()
-    ce_train=CrossEntropyLoss()
+    optimizer = torch.optim.SGD(model.parameters(), lr = args.lr, momentum=args.momentum, weight_decay=args.weight_decay, nesterov=True)
+    ce = CrossEntropyLoss()
+    ce_train = CrossEntropyLoss(cls_count=class_count, dataset_size=dataset_size)
 
     ##### lr multi step schedule
     def lr_schedule_multistep(epoch):
@@ -134,7 +140,7 @@ def Train():
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-            _,predicted = logit.max(1)
+            _, predicted = logit.max(1)
             total += target.size(0)
             correct += predicted.eq(target).sum().item()
         acc_n = logit.max(dim=1)[1].eq(target).sum().item()
@@ -147,7 +153,7 @@ def Train():
         for i,(inputs,target) in enumerate(data.test):
             input, target = inputs.cuda(), target.cuda()
             logit = model(input)
-            loss=ce(logit, target)
+            loss = ce(logit, target)
 
             _, predicted = logit.max(1)
             total += target.size(0)
