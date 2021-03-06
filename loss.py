@@ -37,7 +37,7 @@ class CrossEntropyLoss(nn.Module):
                 print(weight[i], end=' ')
             print(']')
             #   self.weight = torch.ones(size=[10], dtype=torch.float32, device=device)
-            weight = [.05, .05, .05, .05, .05, .05, .05, .05, .05, .05]
+            #   weight = [.05, .05, .05, .05, .05, .05, .05, .05, .05, .05]
             self.weight = torch.as_tensor(data=weight, dtype=torch.float32, device=device)
 
 
