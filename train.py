@@ -61,9 +61,9 @@ def Train():
 
     transform_train = transforms.Compose([
                 # TODO: uncomment these lines for task 3
-                #   Padding(padding=4),
-                #   RandomCrop(size=32),
-                #   RandomFlip(),
+                Padding(padding=4),
+                RandomCrop(size=32),
+                RandomFlip(),
                 transforms.ToTensor(),
                 normalize,
             ])
@@ -93,9 +93,11 @@ def Train():
 
     optimizer = torch.optim.SGD(model.parameters(), lr = args.lr, momentum=args.momentum, weight_decay=args.weight_decay, nesterov=True)
     ce = CrossEntropyLoss()
-    #   ce_train = CrossEntropyLoss(cls_count=class_count, dataset_size=dataset_size)
-    ce_train = CrossEntropyLoss()
-
+    #   Un-comment the following statement for task 2
+    #   ce_train = CrossEntropyLoss()
+    #   Un-comment the following statement for task 4
+    ce_train = CrossEntropyLoss(cls_count=class_count, dataset_size=dataset_size)
+    
     ##### lr multi step schedule
     def lr_schedule_multistep(epoch):
         if epoch<5:
