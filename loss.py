@@ -59,7 +59,8 @@ class CrossEntropyLoss(nn.Module):
             for i in range(len(y)):
                 curr_weight[i] = self.weight[y[i]]
             loss = curr_weight * loss
-            result = loss.sum() / curr_weight.sum()
+            weight_sum = curr_weight.sum().data
+            result = loss.sum() / weight_sum
         else:
             result = loss.mean()
         return result
