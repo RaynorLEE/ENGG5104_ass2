@@ -84,13 +84,12 @@ def Train():
        print_model_parm_flops(model)
        return
 
-    class_count = [0 for i in range(10)]
-    for i, (inputs, target) in enumerate(data.train):
-        for t in target:
-            class_count[t] += 1
-    dataset_size = sum(class_count)
-    print('Class Information: ', class_count)
-    # loss_kwargs = {'cls_count': class_count, 'dataset_size': dataset_size}
+    # class_count = [0 for i in range(10)]
+    # for i, (inputs, target) in enumerate(data.train):
+    #     for t in target:
+    #         class_count[t] += 1
+    # dataset_size = sum(class_count)
+    # print('Class Information: ', class_count)
 
     optimizer = torch.optim.SGD(model.parameters(), lr = args.lr, momentum=args.momentum, weight_decay=args.weight_decay, nesterov=True)
     ce = CrossEntropyLoss()

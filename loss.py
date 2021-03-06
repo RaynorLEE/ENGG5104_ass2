@@ -24,11 +24,6 @@ class CrossEntropyLoss(nn.Module):
                 w = (1. - beta) / (1. - np.power(beta, n_y))
                 weight.append(w)
                 weight_sum += w
-            #   For debugging ONLY
-            print('loss weight = [', end='')
-            for i in range(len(cls_count)):
-                print(weight[i], end=' ')
-            print(']')
             for i in range(len(cls_count)):
                 weight[i] = (weight[i] / weight_sum) * 10
             #   For debugging ONLY
@@ -36,11 +31,7 @@ class CrossEntropyLoss(nn.Module):
             for i in range(len(cls_count)):
                 print(weight[i], end=' ')
             print(']')
-            #   self.weight = torch.ones(size=[10], dtype=torch.float32, device=device)
-            #   weight = [.05, .05, .05, .05, .05, .05, .05, .05, .05, .05]
-            # weight = [0.05016449136315151, 0.07624363330870916, 0.12011425272862185, 0.19318053150099983,
-            #           0.316399146186648, 0.5225637983863902, 0.8576860901541515, 1.429051566775162, 2.4277637689151393,
-            #           4.0068327206810256 ]
+
             self.weight = torch.as_tensor(data=weight, dtype=torch.float32, device=device)
 
 
