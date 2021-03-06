@@ -153,7 +153,7 @@ def Train():
         for i,(inputs,target) in enumerate(data.test):
             input, target = inputs.cuda(), target.cuda()
             logit = model(input)
-            loss = ce(logit, target)
+            #   loss = ce(logit, target)
 
             _, predicted = logit.max(1)
             total += target.size(0)
