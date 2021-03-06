@@ -89,6 +89,7 @@ def Train():
         for t in target:
             class_count[t] += 1
     dataset_size = sum(class_count)
+    print('Class Information: ', class_count)
     # loss_kwargs = {'cls_count': class_count, 'dataset_size': dataset_size}
 
     optimizer = torch.optim.SGD(model.parameters(), lr = args.lr, momentum=args.momentum, weight_decay=args.weight_decay, nesterov=True)
