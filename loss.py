@@ -42,6 +42,7 @@ class CrossEntropyLoss(nn.Module):
         log_sum_exp = torch.logsumexp(x, dim=1)
         y = torch.unsqueeze(y, 1)
         x = torch.gather(dim=1, input=x, index=y)
+        x = x.squeeze(-1)
         loss = -x + log_sum_exp
         if self.task == 4:
             curr_weight = torch.zeros(loss.size(), dtype=x.dtype, device=x.device)
