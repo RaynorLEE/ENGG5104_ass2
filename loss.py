@@ -38,17 +38,17 @@ class CrossEntropyLoss(nn.Module):
 
     def forward(self, x, y, epsilon=1e-12, **kwargs):
         #   x = torch.einsum('c,bc->bc', self.weight, x)
-        if self.task == 4:
-            #   x = self.weight * x
-            x = torch.einsum('c,bc->bc', self.weight, x)
+        # if self.task == 4:
+        #     #   x = self.weight * x
+        #     x = torch.einsum('c,bc->bc', self.weight, x)
         log_sum_exp = torch.logsumexp(x, dim=1)
         y = torch.unsqueeze(y, 1)
         x = torch.gather(dim=1, input=x, index=y)
         x = x.squeeze(-1)
         loss = -x + log_sum_exp
-        # if self.task == 4:
-        #     curr_weight = torch.zeros(loss.size(), dtype=x.dtype, device=x.device)
-        #     for i in range(len(y)):
-        #         curr_weight[i] = self.weight[y[i]]
-        #     loss = curr_weight * loss
+        if self.task == 4:
+            curr_weight = torch.zeros(loss.size(), dtype=x.dtype, device=x.device)
+            for i in range(len(y)):
+                curr_weight[i] = self.weight[y[i]]
+            loss = curr_weight * loss
         return loss.mean()
