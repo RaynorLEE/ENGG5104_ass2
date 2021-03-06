@@ -17,11 +17,15 @@ class CrossEntropyLoss(nn.Module):
             beta = 0.9999
             device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
             self.weight = torch.zeros(size=[len(cls_count)], dtype=torch.float32, device=device)
+            weight_sum = 0.0
             for i in range(len(cls_count)):
                 n_y = cls_count[i]
                 weight = (1. - beta) / (1. - np.power(beta, n_y))
                 #   weight = 1. / (1. - np.power(beta, n_y))
                 self.weight[i] = weight
+                weight_sum += weight
+            for i in range(len(cls_count)):
+                self.weight[i] /= weight_sum
             self.weight.requires_grad = True
             #   For debugging
             print('loss weight = [', end='')
