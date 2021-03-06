@@ -16,37 +16,39 @@ class CrossEntropyLoss(nn.Module):
             #   beta = float(N - 1) / N
             beta = 0.9999
             device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-            self.weight = torch.zeros(size=[len(cls_count)], dtype=torch.float32, device=device)
+            # self.weight = torch.ones(size=[len(cls_count)], dtype=torch.float32, device=device)
+            weight = []
             weight_sum = 0.0
             for i in range(len(cls_count)):
                 n_y = cls_count[i]
-                weight = (1. - beta) / (1. - np.power(beta, n_y))
-                #   weight = 1. / (1. - np.power(beta, n_y))
-                self.weight[i] = weight
-                weight_sum += weight
+                w = (1. - beta) / (1. - np.power(beta, n_y))
+                weight.append(w)
+                weight_sum += w
             for i in range(len(cls_count)):
-                self.weight[i] /= weight_sum
-            self.weight.requires_grad = True
-            #   For debugging
+                weight[i] = weight[i] / weight_sum
+            #   For debugging ONLY
             print('loss weight = [', end='')
             for i in range(len(cls_count)):
-                print(self.weight[i], end=' ')
+                print(weight[i], end=' ')
             print(']')
             #   self.weight = torch.ones(size=[10], dtype=torch.float32, device=device)
+            weight = [.1, .1, .1, .1, .1, .1, .1, .1, .1, .1]
+            self.weight = torch.as_tensor(data=weight, dtype=torch.float32, device=device)
+
 
     def forward(self, x, y, epsilon=1e-12, **kwargs):
         #   x = torch.einsum('c,bc->bc', self.weight, x)
-        # if self.task == 4:
-        #     #   x = self.weight * x
-        #     x = torch.einsum('c,bc->bc', self.weight, x)
+        if self.task == 4:
+            #   x = self.weight * x
+            x = torch.einsum('c,bc->bc', self.weight, x)
         log_sum_exp = torch.logsumexp(x, dim=1)
         y = torch.unsqueeze(y, 1)
         x = torch.gather(dim=1, input=x, index=y)
         x = x.squeeze(-1)
         loss = -x + log_sum_exp
-        if self.task == 4:
-            curr_weight = torch.zeros(loss.size(), dtype=x.dtype, device=x.device)
-            for i in range(len(y)):
-                curr_weight[i] = self.weight[y[i]]
-            loss = curr_weight * loss
+        # if self.task == 4:
+        #     curr_weight = torch.zeros(loss.size(), dtype=x.dtype, device=x.device)
+        #     for i in range(len(y)):
+        #         curr_weight[i] = self.weight[y[i]]
+        #     loss = curr_weight * loss
         return loss.mean()
