@@ -38,23 +38,25 @@ class CrossEntropyLoss(nn.Module):
             print(']')
             #   self.weight = torch.ones(size=[10], dtype=torch.float32, device=device)
             #   weight = [.05, .05, .05, .05, .05, .05, .05, .05, .05, .05]
-            #   weight = [.0516, .0, .05, .05, .05, .05, .05, .05, .05, .05]
+            # weight = [0.05016449136315151, 0.07624363330870916, 0.12011425272862185, 0.19318053150099983,
+            #           0.316399146186648, 0.5225637983863902, 0.8576860901541515, 1.429051566775162, 2.4277637689151393,
+            #           4.0068327206810256 ]
             self.weight = torch.as_tensor(data=weight, dtype=torch.float32, device=device)
 
 
     def forward(self, x, y, epsilon=1e-12, **kwargs):
         #   x = torch.einsum('c,bc->bc', self.weight, x)
-        # if self.task == 4:
-        #     #   x = self.weight * x
-        #     x = torch.einsum('c,bc->bc', self.weight, x)
+        if self.task == 4:
+            #   x = self.weight * x
+            x = torch.einsum('c,bc->bc', self.weight, x)
         log_sum_exp = torch.logsumexp(x, dim=1)
         y = torch.unsqueeze(y, 1)
         x = torch.gather(dim=1, input=x, index=y)
         x = x.squeeze(-1)
         loss = -x + log_sum_exp
-        if self.task == 4:
-            curr_weight = torch.zeros(loss.size(), dtype=x.dtype, device=x.device)
-            for i in range(len(y)):
-                curr_weight[i] = self.weight[y[i]]
-            loss = curr_weight * loss
+        # if self.task == 4:
+        #     curr_weight = torch.zeros(loss.size(), dtype=x.dtype, device=x.device)
+        #     for i in range(len(y)):
+        #         curr_weight[i] = self.weight[y[i]]
+        #     loss = curr_weight * loss
         return loss.mean()
