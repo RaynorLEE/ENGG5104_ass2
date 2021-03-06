@@ -30,7 +30,7 @@ class CrossEntropyLoss(nn.Module):
                 print(weight[i], end=' ')
             print(']')
             for i in range(len(cls_count)):
-                weight[i] = weight[i] / weight_sum
+                weight[i] = (weight[i] / weight_sum) * 10
             #   For debugging ONLY
             print('loss weight = [', end='')
             for i in range(len(cls_count)):
@@ -38,6 +38,7 @@ class CrossEntropyLoss(nn.Module):
             print(']')
             #   self.weight = torch.ones(size=[10], dtype=torch.float32, device=device)
             #   weight = [.05, .05, .05, .05, .05, .05, .05, .05, .05, .05]
+            #   weight = [.0516, .0, .05, .05, .05, .05, .05, .05, .05, .05]
             self.weight = torch.as_tensor(data=weight, dtype=torch.float32, device=device)
 
 
