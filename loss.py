@@ -30,7 +30,7 @@ class CrossEntropyLoss(nn.Module):
                 print(weight[i], end=' ')
             print(']')
             for i in range(len(cls_count)):
-                weight[i] = (weight[i] / weight_sum) * 10
+                weight[i] = (weight[i] / weight_sum) * 20
             #   For debugging ONLY
             print('loss weight = [', end='')
             for i in range(len(cls_count)):
