@@ -14,7 +14,7 @@ class CrossEntropyLoss(nn.Module):
             cls_count = kwargs['cls_count']
             #   N = kwargs['dataset_size']
             #   beta = float(N - 1) / N
-            beta = 0.99978
+            beta = 0.999
             device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
             # self.weight = torch.ones(size=[len(cls_count)], dtype=torch.float32, device=device)
             weight = []
