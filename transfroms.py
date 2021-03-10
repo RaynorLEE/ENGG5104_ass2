@@ -24,8 +24,8 @@ class RandomCrop(object):
         self.size = size
 
     def __call__(self, img, **kwargs):
-        y = random.randint(0, img.size[0] - self.size - 1)
-        x = random.randint(0, img.size[1] - self.size - 1)
+        y = random.randint(0, img.size[0] - self.size)
+        x = random.randint(0, img.size[1] - self.size)
         cropped_img = img.crop(box=tuple([x, y, x+img.size[1], y+img.size[0]]))
         return cropped_img
 
