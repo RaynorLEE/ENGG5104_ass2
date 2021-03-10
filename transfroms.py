@@ -19,17 +19,17 @@ from PIL import ImageOps
 #         return padded_img
 #
 #
-# class RandomCrop(object):
-#     def __init__(self, size):
-#         self.size = size
-#
-#     def __call__(self, img, **kwargs):
-#         y = random.randint(0, img.size[0] - self.size)
-#         x = random.randint(0, img.size[1] - self.size)
-#         cropped_img = img.crop(box=tuple([x, y, x+img.size[1], y+img.size[0]]))
-#         return cropped_img
-#
-#
+class RandomCrop(object):
+    def __init__(self, size):
+        self.size = size
+
+    def __call__(self, img, **kwargs):
+        y = random.randint(0, img.size[0] - self.size)
+        x = random.randint(0, img.size[1] - self.size)
+        cropped_img = img.crop(box=tuple([x, y, x+img.size[1], y+img.size[0]]))
+        return cropped_img
+
+
 class RandomFlip(object):
     def __init__(self, ):
         pass
@@ -52,18 +52,18 @@ class Padding(object):
         return img
 
 
-class RandomCrop(object):
-    def __init__(self,size):
-        self.crop_size = size
-    def __call__(self, img, **kwargs):
-        W = img.size[0]
-        H = img.size[1]
-        Wl = random.randint(0,W - self.crop_size)
-        Wr = W - self.crop_size - Wl
-        Ht = random.randint(0,H - self.crop_size)
-        Hd = H - self.crop_size - Ht
-        img = ImageOps.crop(img, border=(Wl, Ht, Wr, Hd))
-        return img
+# class RandomCrop(object):
+#     def __init__(self,size):
+#         self.crop_size = size
+#     def __call__(self, img, **kwargs):
+#         W = img.size[0]
+#         H = img.size[1]
+#         Wl = random.randint(0,W - self.crop_size)
+#         Wr = W - self.crop_size - Wl
+#         Ht = random.randint(0,H - self.crop_size)
+#         Hd = H - self.crop_size - Ht
+#         img = ImageOps.crop(img, border=(Wl, Ht, Wr, Hd))
+#         return img
 
 
 # class RandomFlip(object):
