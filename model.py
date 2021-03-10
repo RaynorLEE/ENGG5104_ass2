@@ -13,12 +13,12 @@ class AlexNet(nn.Module):
         # TODO: implement alex net for task 1; 
         # You are free to change channels, kernel sizes, strides, etc. But the model's flops must be smaller than 200M.
         self.conv1 = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=128, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=3, out_channels=104, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, stride=2)
         )
         self.conv2 = nn.Sequential(
-            nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=104, out_channels=256, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, stride=2)
         )
@@ -37,14 +37,14 @@ class AlexNet(nn.Module):
         )
         self.avg_pool = nn.AdaptiveAvgPool2d((2, 2))
         self.fc1 = nn.Sequential(
-            nn.Linear(1024, 2048),
+            nn.Linear(1024, 4096),
             nn.ReLU()
         )
         self.fc2 = nn.Sequential(
-            nn.Linear(2048, 2048),
+            nn.Linear(4096, 4096),
             nn.ReLU()
         )
-        self.fc3 = nn.Linear(2048, 10)
+        self.fc3 = nn.Linear(4096, 10)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.conv1(x)
