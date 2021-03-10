@@ -3,7 +3,7 @@ import numpy as np
 import PIL
 import random
 import cv2
-
+from PIL import ImageOps
 
 # TODO: implementation transformations for task3;
 # You cannot directly use them from pytorch, but you are free to use functions from cv2 and PIL
