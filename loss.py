@@ -33,7 +33,6 @@ class CrossEntropyLoss(nn.Module):
             print(']')
 
             self.weight = torch.as_tensor(data=weight, dtype=torch.float32, device=device)
-        self.ce = nn.CrossEntropyLoss()
 
     def forward(self, x, y, epsilon=1e-12, **kwargs):
         #   x = torch.einsum('c,bc->bc', self.weight, x)
