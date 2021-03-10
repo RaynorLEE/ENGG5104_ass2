@@ -13,8 +13,8 @@ class Padding(object):
 
     def __call__(self, img, **kwargs):
         # padded_img = np.zeros([img.size[0]+self.padding, img.size[1]+self.padding], 3, dtype=)
-        padded_img = PIL.Image.new(mode=img.mode, size=tuple([img.size[0] + self.padding, img.size[1] + self.padding]),
-                                   color=0)
+        padded_img = PIL.Image.new(mode=img.mode, size=tuple([img.size[0] + self.padding * 2,
+                                                              img.size[1] + self.padding * 2]), color=0)
         padded_img.paste(img, tuple([self.padding, self.padding]))
         return padded_img
 
