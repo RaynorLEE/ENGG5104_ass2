@@ -61,9 +61,9 @@ def Train():
 
     transform_train = transforms.Compose([
                 # TODO: uncomment these lines for task 3
-                #   Padding(padding=4),
-                #   RandomCrop(size=32),
-                #   RandomFlip(),
+                Padding(padding=4),
+                RandomCrop(size=32),
+                RandomFlip(),
                 transforms.ToTensor(),
                 normalize,
             ])
