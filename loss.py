@@ -40,22 +40,20 @@ class CrossEntropyLoss(nn.Module):
         # if self.task == 4 and kwargs['epo'] >= 80:
         #     x = self.weight * x
         #   x = torch.einsum('c,bc->bc', self.weight, x)
-        loss_ce = self.ce(x, y)
-        # log_sum_exp = torch.logsumexp(x, dim=1)
-        # y = torch.unsqueeze(y, 1)
-        # x = torch.gather(dim=1, input=x, index=y)
-        # x = x.squeeze(-1)
-        # loss = -x + log_sum_exp
-        # if self.task == 4 and kwargs['epo'] >= 80:
-        #     curr_weight = torch.zeros(loss.size(), dtype=x.dtype, device=x.device)
-        #     for i in range(len(y)):
-        #         curr_weight[i] = self.weight[y[i]]
-        #     loss = curr_weight * loss
-        #     result = loss.sum() / curr_weight.sum()
-        # else:
-        #     result = loss.mean()
-        #   return result
+        log_sum_exp = torch.logsumexp(x, dim=1)
+        y = torch.unsqueeze(y, 1)
+        x = torch.gather(dim=1, input=x, index=y)
+        x = x.squeeze(-1)
+        loss = -x + log_sum_exp
+        if self.task == 4 and kwargs['epo'] >= 80:
+            curr_weight = torch.zeros(loss.size(), dtype=x.dtype, device=x.device)
+            for i in range(len(y)):
+                curr_weight[i] = self.weight[y[i]]
+            loss = curr_weight * loss
+            result = loss.sum() / curr_weight.sum()
+        else:
+            result = loss.mean()
+        return result
 
         # return loss.mean()
-
-        return loss_ce
+        # return loss
