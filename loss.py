@@ -35,11 +35,12 @@ class CrossEntropyLoss(nn.Module):
             self.weight = torch.as_tensor(data=weight, dtype=torch.float32, device=device)
             #   self.ce = nn.CrossEntropyLoss(weight=self.weight)
 
-
     def forward(self, x, y, epsilon=1e-12, **kwargs):
         #   x = torch.einsum('c,bc->bc', self.weight, x)
         if self.task == 4:
-            x = self.weight * x
+            epo = kwargs['epo']
+            if epo >= 80:
+                x = self.weight * x
             #   x = torch.einsum('c,bc->bc', self.weight, x)
         log_sum_exp = torch.logsumexp(x, dim=1)
         y = torch.unsqueeze(y, 1)

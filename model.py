@@ -41,10 +41,10 @@ class AlexNet(nn.Module):
             nn.ReLU()
         )
         self.fc2 = nn.Sequential(
-            nn.Linear(2048, 1024),
+            nn.Linear(2048, 2048),
             nn.ReLU()
         )
-        self.fc3 = nn.Linear(1024, 10)
+        self.fc3 = nn.Linear(2048, 10)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.conv1(x)
