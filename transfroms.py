@@ -39,6 +39,6 @@ class RandomFlip(object):
         v = random.randint(0, 1)
         if h == 1:
             img = img.transpose(PIL.Image.FLIP_LEFT_RIGHT)
-        if v == 1:
-            img = img.transpose(PIL.Image.FLIP_TOP_BOTTOM)
+        # if v == 1:
+        #     img = img.transpose(PIL.Image.FLIP_TOP_BOTTOM)
         return img
