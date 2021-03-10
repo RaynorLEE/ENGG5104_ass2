@@ -94,9 +94,9 @@ def Train():
     optimizer = torch.optim.SGD(model.parameters(), lr = args.lr, momentum=args.momentum, weight_decay=args.weight_decay, nesterov=True)
     ce = CrossEntropyLoss()
     #   Un-comment the following statement for task 2
-    ce_train = CrossEntropyLoss()
+    # ce_train = CrossEntropyLoss()
     #   Un-comment the following statement for task 4
-    #   ce_train = CrossEntropyLoss(cls_count=class_count, dataset_size=dataset_size)
+    ce_train = CrossEntropyLoss(cls_count=class_count, dataset_size=dataset_size)
 
     ##### lr multi step schedule
     def lr_schedule_multistep(epoch):
@@ -138,7 +138,7 @@ def Train():
         for i,(inputs,target) in enumerate(data.train):
             input, target = inputs.cuda(), target.cuda()
             logit = model(input)
-            loss = ce_train(logit, target)
+            loss = ce_train(logit, target, epo=epoch)
             total_loss += loss
             optimizer.zero_grad()
             loss.backward()
