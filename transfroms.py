@@ -30,18 +30,18 @@ from PIL import ImageOps
 #         return cropped_img
 #
 #
-# class RandomFlip(object):
-#     def __init__(self, ):
-#         pass
-#
-#     def __call__(self, img, **kwargs):
-#         h = random.randint(0, 1)
-#         v = random.randint(0, 1)
-#         if h == 1:
-#             img = img.transpose(PIL.Image.FLIP_LEFT_RIGHT)
-#         # if v == 1:
-#         #     img = img.transpose(PIL.Image.FLIP_TOP_BOTTOM)
-#         return img
+class RandomFlip(object):
+    def __init__(self, ):
+        pass
+
+    def __call__(self, img, **kwargs):
+        h = random.randint(0, 1)
+        v = random.randint(0, 1)
+        if h == 1:
+            img = img.transpose(PIL.Image.FLIP_LEFT_RIGHT)
+        # if v == 1:
+        #     img = img.transpose(PIL.Image.FLIP_TOP_BOTTOM)
+        return img
 
 class Padding(object):
     def __init__(self,padding):
@@ -66,19 +66,19 @@ class RandomCrop(object):
         return img
 
 
-class RandomFlip(object):
-    def __init__(self,):
-        pass
-    def __call__(self, img, **kwargs):
-        seed = random.random()
-        if seed<0.45:
-            img = img
-        elif 0.45<= seed and seed<=0.5:
-            img = ImageOps.flip(img)
-        elif seed>0.55:
-            img = ImageOps.mirror(img)
-        else:
-            img = ImageOps.flip(img)
-            img = ImageOps.mirror(img)
-
-        return img
+# class RandomFlip(object):
+#     def __init__(self,):
+#         pass
+#     def __call__(self, img, **kwargs):
+#         seed = random.random()
+#         if seed<0.45:
+#             img = img
+#         elif 0.45<= seed and seed<=0.5:
+#             img = ImageOps.flip(img)
+#         elif seed>0.55:
+#             img = ImageOps.mirror(img)
+#         else:
+#             img = ImageOps.flip(img)
+#             img = ImageOps.mirror(img)
+#
+#         return img
