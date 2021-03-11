@@ -12,8 +12,6 @@ class CrossEntropyLoss(nn.Module):
         if 'cls_count' in kwargs:
             self.task = 4
             cls_count = kwargs['cls_count']
-            #   N = kwargs['dataset_size']
-            #   beta = float(N - 1) / N
             beta = 0.99978
             device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
             # self.weight = torch.ones(size=[len(cls_count)], dtype=torch.float32, device=device)
@@ -35,10 +33,6 @@ class CrossEntropyLoss(nn.Module):
             self.weight = torch.as_tensor(data=weight, dtype=torch.float32, device=device)
 
     def forward(self, x, y, epsilon=1e-12, **kwargs):
-        #   x = torch.einsum('c,bc->bc', self.weight, x)
-        # if self.task == 4 and kwargs['epo'] >= 80:
-        #     x = self.weight * x
-        #   x = torch.einsum('c,bc->bc', self.weight, x)
         log_sum_exp = torch.logsumexp(x, dim=1)
         y = torch.unsqueeze(y, 1)
         x = torch.gather(dim=1, input=x, index=y)
@@ -53,6 +47,3 @@ class CrossEntropyLoss(nn.Module):
         else:
             result = loss.mean()
         return result
-
-        # return loss.mean()
-        # return loss
