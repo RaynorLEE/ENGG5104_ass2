@@ -15,6 +15,7 @@ import torchvision.transforms as transforms
 
 from datasets import dataset
 from model import alexnet
+from ResNet import *
 from loss import CrossEntropyLoss
 from flops import print_model_parm_flops
 from transfroms import *
@@ -75,7 +76,9 @@ def Train():
     data = getattr(dataset, args.dataset)(batch_size=args.batch_size, transform_train=transform_train, transform_test=transform_test)
   
     #####
-    model=alexnet(num_classes=args.num_classes)
+    #   model=alexnet(num_classes=args.num_classes)
+    #   Uncomment the following line for task 5
+    model = ResNet()
     model = nn.DataParallel(model)
     cudnn.benchmark = True
     model=model.cuda()
