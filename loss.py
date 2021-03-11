@@ -44,7 +44,7 @@ class CrossEntropyLoss(nn.Module):
         x = torch.gather(dim=1, input=x, index=y)
         x = x.squeeze(-1)
         loss = -x + log_sum_exp
-        if self.task == 4 and kwargs['epo'] >= 80:
+        if self.task == 4 and kwargs['epo'] >= 70:
             curr_weight = torch.zeros(loss.size(), dtype=x.dtype, device=x.device)
             for i in range(len(y)):
                 curr_weight[i] = self.weight[y[i]]
