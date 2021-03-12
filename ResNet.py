@@ -1,6 +1,9 @@
 import torch.nn as nn
 import torch.nn.functional as F
 
+#   Reference: Code adapted from LI Muzhi's undergraduate project
+#   https://github.com/RaynorLEE/CIFAR10-Image-Classification
+
 
 class ResBlock(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride):
