@@ -1,6 +1,7 @@
 # ENGG5104_ass2
 ENGG5104 Image Processing and CV assignment2
-For Q2, please comment line 65, 66, 67, 81, 102 and uncomment line 79, 100 in train.py
+
+For Q2, please comment line 65, 66, 67, 81, 102 and uncomment line 79, 100 in train.py\n
 For Q3, please comment line 81, 102 and uncomment line 65, 66, 67, 79, 100 in train.py
 For Q4, please comment line 81, 100, and uncomment line 65, 66, 67, 79, 102 in train.py 
 For Q5, please comment line 79, 100, and uncomment line 65, 66, 67, 81, 102 in train.py
