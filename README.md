@@ -1,5 +1,7 @@
 # ENGG5104_ass2
-ENGG5104 Image Processing and CV assignment2
+ENGG5104 Image Processing and CV assignment2 - Long Tail CIFAR-10 Image Classification
+
+Please, DO cite this github repository if you use my code. 
 
 For Q2, please comment line 65, 66, 67, 81, 102 and uncomment line 79, 100 in train.py
 
